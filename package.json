@@ -15,6 +15,9 @@
     "url": "git+https://github.com/hjthorpe/project-boilerplate.git"
   },
   "keywords": [],
+  "engines": {
+    "node": "12.16.1"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {

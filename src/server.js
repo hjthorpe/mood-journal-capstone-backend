@@ -1,6 +1,7 @@
 // const app = require('./app');
-
 // const { PORT } = require('./config');
+
+// ** BEGIN MOOD-JOURNAL-CAPSTONE SERVER ** //
 
 const express = require('express');
 const app = express();
