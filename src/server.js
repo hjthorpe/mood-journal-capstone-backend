@@ -21,9 +21,9 @@ app.use(
 
 const getEntries = (req, res) => {
   client.connect();
-  client.query('SELECT * from moodjournalentries',(err, res) => {
-    console.log(err,res);
-    res.status(200).json(res.rows);
+  client.query('SELECT * from moodjournalentries',(err, response) => {
+    console.log(response);
+    res.status(200).json(response.rows);
     client.end();
   });
 
