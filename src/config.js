@@ -16,7 +16,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'mood-journal-capstone',
-  password: 'Antolini1',
+  // password: 'Antolini1',
   port: 5432
 });
 
