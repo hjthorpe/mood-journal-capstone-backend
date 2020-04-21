@@ -1,21 +1,14 @@
-// const app = require('./app');
-// const { PORT } = require('./config');
-
 // ** BEGIN MOOD-JOURNAL-CAPSTONE SERVER ** //
 
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { pool } = require('./config');
+const { client } = require('./config');
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 const {CLIENT_ORIGIN} = require('./config');
-
-// app.get('/api/*', (req, res) => {
-//   res.json({ok: true});
-// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -27,29 +20,30 @@ app.use(
 );
 
 const getEntries = (req, res) => {
-  pool.query('SELECT * FROM moodjournalentries', (error, response) => {
-    // if (error) {
-    //   throw error;
-    // }
+  client.connect();
+  client.query('SELECT * from moodjournalentries',(err, res) => {
+    console.log(err,res);
     res.status(200).json(res.rows);
+    client.end();
   });
+
 };
 
-const addEntry = (req, res) => {
-  const { title, content, mood } = req.body;
+// const addEntry = (req, res) => {
+//   const { title, content, mood } = req.body;
 
-  pool.query('INSERT INTO moodjournalentries (title, content, mood) VALUES ($1, $2, $3)' [title, content, mood], error => {
-    // if (error) {
-    //   throw error;
-    // }
-    res.status(201).json({status: 'success', msg: 'Entry added'});
-  });
-};
+//   pool.query('INSERT INTO moodjournalentries (title, content, mood) VALUES ($1, $2, $3)' [title, content, mood], error => {
+//     // if (error) {
+//     //   throw error;
+//     // }
+//     res.status(201).json({status: 'success', msg: 'Entry added'});
+//   });
+// };
 
 app
   .route('/api/moodjournal/entries')
-  .get(getEntries)
-  .post(addEntry);
+  .get(getEntries);
+  // .post(addEntry);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
