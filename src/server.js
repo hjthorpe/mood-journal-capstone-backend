@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { client, pool } = require('./config');
+const { client } = require('./config');
 
 const app = express();
 
@@ -30,11 +30,15 @@ const getEntries = (req, res) => {
 
 const addEntry = (req, res) => {
   const { title, content, mood } = req.body;
-  pool.query('INSERT INTO moodjournalentries(title, content, mood)values("Hannah", "Im pressed because this damn thing is due Friday", "Stressed")' [title, content, mood],(response)=>{
-    console.log(response);
-    res.status(201).json({status: 'success', msg: 'Entry added'});
-    pool.end();
-  });    
+  client.connect();
+  const text = 'INSERT INTO moodjournalentries(title, content, mood ) VALUES($1, $2, $3) RETURNING *';
+  const values = ['Hannah', 'Im pressed because this damn thing is due Friday', 'Stressed'];
+  client.query(text, values,
+    (response)=>{
+      console.log(response);
+      res.status(201).json({status: 'success', msg: 'Entry added'});
+      client.end();
+    });
 };
 
 app

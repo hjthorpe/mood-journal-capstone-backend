@@ -12,19 +12,9 @@ const client = new Client({
 
 
 
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'mood-journal-capstone',
-  password: 'Antolini1',
-  port: 5432
-});
-
-
 
 
 module.exports = {
-  client,
-  pool
+  client
 };
 
