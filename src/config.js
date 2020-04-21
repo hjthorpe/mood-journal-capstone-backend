@@ -9,21 +9,22 @@ const client = new Client({
   connectionString:connectionString
 });
 
-// client.connect();
-// client.query('SELECT * from moodjournalentries',(err,res) => {
-//   console.log(err,res);
-//   client.end();
-// });
 
 
-// const pool = new Pool({
-//   connectionString: isProduction ? process.env.DATABASE_URL :
-//     connectionString,
-//   ssl: isProduction,
-// });
+
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'mood-journal-capstone',
+  password: 'Antolini1',
+  port: 5432
+});
+
+
 
 
 module.exports = {
-  client
+  client,
+  pool
 };
 

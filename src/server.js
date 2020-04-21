@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { client } = require('./config');
+const { client, pool } = require('./config');
 
 const app = express();
 
@@ -21,29 +21,26 @@ app.use(
 
 const getEntries = (req, res) => {
   client.connect();
-  client.query('SELECT * from moodjournalentries',(err, response) => {
-    console.log(response);
+  client.query('SELECT * from moodjournalentries',(response) => {
     res.status(200).json(response.rows);
     client.end();
   });
 
 };
 
-// const addEntry = (req, res) => {
-//   const { title, content, mood } = req.body;
-
-//   pool.query('INSERT INTO moodjournalentries (title, content, mood) VALUES ($1, $2, $3)' [title, content, mood], error => {
-//     // if (error) {
-//     //   throw error;
-//     // }
-//     res.status(201).json({status: 'success', msg: 'Entry added'});
-//   });
-// };
+const addEntry = (req, res) => {
+  const { title, content, mood } = req.body;
+  pool.query('INSERT INTO moodjournalentries(title,content,mood)values('Hannah', 'Im pressed because this damn thing is due Friday', 'Stressed')' [title, content, mood],(response)=>{
+    console.log(response);
+    res.status(201).json({status: 'success', msg: 'Entry added'});
+    pool.end();
+  });    
+};
 
 app
   .route('/api/moodjournal/entries')
-  .get(getEntries);
-  // .post(addEntry);
+  .get(getEntries)
+  .post(addEntry);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
