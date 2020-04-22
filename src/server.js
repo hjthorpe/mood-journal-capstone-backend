@@ -41,10 +41,25 @@ const addEntry = (req, res) => {
     });
 };
 
+const updateEntry = (req, res) => {
+  client.connect();
+  client.query(
+    'Update moodjournalentries SET title=$1, content=$2, mood=$3 WHERE id=$4 RETURNING *', 
+    (response) => {
+      console.log(response.rows);
+      res.status(201).json({status: 'success', msg: 'Entry has been updated'});
+      client.end();
+    });
+};
+
 app
   .route('/api/moodjournal/entries')
   .get(getEntries)
   .post(addEntry);
+
+app
+  .route('/api/moodjournal/entries/:id')
+  .patch(updateEntry);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
