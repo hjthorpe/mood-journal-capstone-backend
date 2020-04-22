@@ -22,7 +22,8 @@ app.use(
 const getEntries = (req, res) => {
   client.connect();
   client.query('SELECT * from moodjournalentries',(response) => {
-    res.status(200).json(response.rows);
+    console.log(response);
+    res.status(200).json(response);
     client.end();
   });
 
