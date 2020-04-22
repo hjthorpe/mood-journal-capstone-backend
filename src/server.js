@@ -1,6 +1,7 @@
 // ** BEGIN MOOD-JOURNAL-CAPSTONE SERVER ** //
 
 const express = require('express');
+const nodemon = require('nodemon');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { client, pool } = require('./config');
@@ -20,12 +21,11 @@ app.use(
 );
 
 const getEntries = (req, res) => {
-  client.connect();
-  client.query('SELECT * from moodjournalentries', (err, response => {
-    console.log(err ? err.stack : response.rows); 
-    res.status(200).json(response.rows);
+  client.query('SELECT * from moodjournalentries', (err, results) => {
+    console.log(err ? err.stack : results);
+    res.status(200).json(results.rows);
     client.end();
-  }));
+  });
 
 };
 
@@ -33,10 +33,10 @@ const addEntry = (req, res) => {
   const { title, content, mood } = req.body;
   client.connect();
   const text = 'INSERT INTO moodjournalentries(title, content, mood ) VALUES($1, $2, $3) RETURNING *';
-  const values = ['Get wont see this', 'why are my get requests returning null?', 'annoyed'];
+  const values = ['nodemon', 'this is the reason..', 'feeling dumb'];
   client.query(text, values,
-    (err, response)=>{
-      console.log(err ? err.stack : response.rows);
+    (err, results)=>{
+      console.log(err ? err.stack : results.rows);
       res.status(201).json({status: 'success', msg: 'Entry added'});
       client.end();
     });
@@ -59,7 +59,7 @@ const deleteEntry = (req, res) => {
     console.log(response);
     res.status(204).json();
     client.end();
-  });k
+  });
 };
 
 app
