@@ -21,11 +21,11 @@ app.use(
 
 const getEntries = (req, res) => {
   client.connect();
-  client.query('SELECT * from moodjournalentries',(response) => {
-    console.log(response);
-    res.status(200).json(response);
+  client.query('SELECT * from moodjournalentries', (err, response => {
+    console.log(err ? err.stack : response.rows); 
+    res.status(200).json(response.rows);
     client.end();
-  });
+  }));
 
 };
 
@@ -33,10 +33,10 @@ const addEntry = (req, res) => {
   const { title, content, mood } = req.body;
   client.connect();
   const text = 'INSERT INTO moodjournalentries(title, content, mood ) VALUES($1, $2, $3) RETURNING *';
-  // const values = ['Hannah', 'Im pressed because this damn thing is due Friday', 'Stressed'];
+  const values = ['Get wont see this', 'why are my get requests returning null?', 'annoyed'];
   client.query(text, values,
-    (response)=>{
-      console.log(response);
+    (err, response)=>{
+      console.log(err ? err.stack : response.rows);
       res.status(201).json({status: 'success', msg: 'Entry added'});
       client.end();
     });
@@ -46,8 +46,8 @@ const updateEntry = (req, res) => {
   client.connect();
   client.query(
     'UPDATE moodjournalentries SET title="check", content="hello", mood="tired" WHERE id=2 RETURNING *', 
-    (response) => {
-      console.log(response);
+    (err, response) => {
+      console.log(err,response);
       res.status(201).json({status: 'success', msg: 'Entry has been updated'});
       client.end();
     });
@@ -59,7 +59,7 @@ const deleteEntry = (req, res) => {
     console.log(response);
     res.status(204).json();
     client.end();
-  });
+  });k
 };
 
 app
