@@ -32,7 +32,7 @@ const addEntry = (req, res) => {
   const { title, content, mood } = req.body;
   client.connect();
   const text = 'INSERT INTO moodjournalentries(title, content, mood ) VALUES($1, $2, $3) RETURNING *';
-  const values = ['Hannah', 'Im pressed because this damn thing is due Friday', 'Stressed'];
+  // const values = ['Hannah', 'Im pressed because this damn thing is due Friday', 'Stressed'];
   client.query(text, values,
     (response)=>{
       console.log(response);
@@ -44,7 +44,7 @@ const addEntry = (req, res) => {
 const updateEntry = (req, res) => {
   client.connect();
   client.query(
-    'Update moodjournalentries SET title=$1, content=$2, mood=$3 WHERE id=$4 RETURNING *', 
+    'UPDATE moodjournalentries SET title="check", content="hello", mood="tired" WHERE id=2 RETURNING *', 
     (response) => {
       console.log(response.rows);
       res.status(201).json({status: 'success', msg: 'Entry has been updated'});
