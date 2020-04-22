@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { client } = require('./config');
+const { client, pool } = require('./config');
 
 const app = express();
 
@@ -46,10 +46,19 @@ const updateEntry = (req, res) => {
   client.query(
     'UPDATE moodjournalentries SET title="check", content="hello", mood="tired" WHERE id=2 RETURNING *', 
     (response) => {
-      console.log(response.rows);
+      console.log(response);
       res.status(201).json({status: 'success', msg: 'Entry has been updated'});
       client.end();
     });
+};
+
+const deleteEntry = (req, res) => {
+  client.connect();
+  client.query('DELETE from moodjournalentries WHERE id=1',(response)=>{
+    console.log(response);
+    res.status(204).json();
+    client.end();
+  });
 };
 
 app
@@ -59,7 +68,8 @@ app
 
 app
   .route('/api/moodjournal/entries/:id')
-  .patch(updateEntry);
+  .patch(updateEntry)
+  .delete(deleteEntry);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
