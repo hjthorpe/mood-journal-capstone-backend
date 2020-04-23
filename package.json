@@ -7,6 +7,7 @@
     "test": "mocha --require test/setup.js",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
+    "migrate": "node-pg-migrate",
     "predeploy": "npm audit",
     "deploy": "git push heroku master"
   },
@@ -31,7 +32,8 @@
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "morgan": "^1.10.0",
-    "pg": "^8.0.2"
+    "node-pg-migrate": "^4.6.2",
+    "pg": "^8.0.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",
