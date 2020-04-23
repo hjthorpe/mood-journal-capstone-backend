@@ -38,9 +38,8 @@ const addEntry = (req, res) => {
 
 const updateEntry = (req, res) => {
   client.query(
-    `UPDATE moodjournalentries SET "title"='check' WHERE id=${req.params.id} RETURNING *`, 
+    `UPDATE moodjournalentries SET "title"=$1, "content"=$2, "mood"=$3  WHERE id=${req.params.id} RETURNING *`, 
     (err, results) => {
-      console.log(results.rows);
       res.status(201).json({status: 'success', msg: 'Entry has been updated'});
     });
 };
