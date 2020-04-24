@@ -14,11 +14,11 @@ const {CLIENT_ORIGIN} = require('./config');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(
-  cors({
-    origin: CLIENT_ORIGIN
-  })
-);
+// app.use(
+//   cors({
+//     origin: CLIENT_ORIGIN
+//   })
+// );
 
 const getEntries = (req, res) => {
   client.query('SELECT * from moodjournalentries', (err, results) => {
