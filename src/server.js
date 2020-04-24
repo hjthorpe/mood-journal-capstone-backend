@@ -7,7 +7,7 @@ const cors = require('cors');
 const { client } = require('./config');
 
 const app = express();
-
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 const {CLIENT_ORIGIN} = require('./config');
 
