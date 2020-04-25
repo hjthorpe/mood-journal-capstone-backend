@@ -41,6 +41,7 @@ const updateEntry = (req, res) => {
 
 const deleteEntry = (req, res) => {
   client.query(`DELETE from moodjournalentries WHERE "id"='${req.params.id}'`,(err, results)=>{
+    console.log(err);
     res.status(204).json({status: 'success', msg: 'Entry has been deleted'});
   });
 };
