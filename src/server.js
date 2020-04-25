@@ -35,13 +35,13 @@ const updateEntry = (req, res) => {
   client.query(
     `UPDATE moodjournalentries SET "title"='${title}', "content"='${content}', "mood"='${mood}'  WHERE id=${req.params.id} RETURNING *`, 
     (err, results) => {
+      console.log(err, results);
       res.status(201).json({status: 'success', msg: 'Entry has been updated'});
     });
 };
 
 const deleteEntry = (req, res) => {
   client.query(`DELETE from moodjournalentries WHERE "id"='${req.params.id}'`,(err, results)=>{
-    console.log(err, results);
     res.status(204).json({status: 'success', msg: 'Entry has been deleted'});
   });
 };
