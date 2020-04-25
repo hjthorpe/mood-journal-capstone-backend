@@ -22,20 +22,18 @@ const getEntries = (req, res) => {
 };
 
 const addEntry = (req, res) => {
-  console.log('addEntry called');
   const { title, content, mood } = req.body;
-  console.log(title, content, mood);
   const text = `INSERT INTO moodjournalentries("title", "content", "mood" ) VALUES('${title}', '${content}', '${mood}') RETURNING *`;
   client.query(text,
     (err, results)=>{
-      console.log(err);
       res.status(201).json({status: 'success', msg: 'Entry added'});
     });
 };
 
 const updateEntry = (req, res) => {
+  const { title, content, mood } = req.body;
   client.query(
-    `UPDATE moodjournalentries SET "title"=$1, "content"=$2, "mood"=$3  WHERE id=${req.params.id} RETURNING *`, 
+    `UPDATE moodjournalentries SET "title"='${title}', "content"='${content}', "mood"='${mood}'  WHERE id=${req.params.id} RETURNING *`, 
     (err, results) => {
       res.status(201).json({status: 'success', msg: 'Entry has been updated'});
     });
