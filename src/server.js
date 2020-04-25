@@ -14,12 +14,6 @@ const {CLIENT_ORIGIN} = require('./config');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// app.use(
-//   cors({
-//     origin: CLIENT_ORIGIN
-//   })
-// );
-
 const getEntries = (req, res) => {
   client.query('SELECT * from moodjournalentries', (err, results) => {
     res.status(200).json(results.rows);
@@ -29,7 +23,7 @@ const getEntries = (req, res) => {
 
 const addEntry = (req, res) => {
   const { title, content, mood } = req.body;
-  const text = 'INSERT INTO moodjournalentries(title, content, mood ) VALUES($1, $2, $3) RETURNING *';
+  const text = `INSERT INTO moodjournalentries(title, content, mood ) VALUES(${title}, ${content}, ${mood}) RETURNING *`;
   client.query(text,
     (err, results)=>{
       res.status(201).json({status: 'success', msg: 'Entry added'});
