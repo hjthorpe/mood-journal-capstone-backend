@@ -22,7 +22,9 @@ const getEntries = (req, res) => {
 };
 
 const addEntry = (req, res) => {
+  console.log('addEntry called');
   const { title, content, mood } = req.body;
+  console.log(title, content, mood);
   const text = `INSERT INTO moodjournalentries(title, content, mood ) VALUES(${title}, ${content}, ${mood}) RETURNING *`;
   client.query(text,
     (err, results)=>{
