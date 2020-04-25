@@ -28,6 +28,7 @@ const addEntry = (req, res) => {
   const text = `INSERT INTO moodjournalentries(title, content, mood ) VALUES(${title}, ${content}, ${mood}) RETURNING *`;
   client.query(text,
     (err, results)=>{
+      console.log(results);
       res.status(201).json({status: 'success', msg: 'Entry added'});
     });
 };
