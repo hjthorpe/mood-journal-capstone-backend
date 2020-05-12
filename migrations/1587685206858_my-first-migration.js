@@ -5,9 +5,9 @@ exports.up = (pgm) => {
     mood: { type: 'varchar(30)', notNull: true},
     content: {type: 'text', notNull: true},
     date: {
-      type: 'timestamp',
+      type: 'datetime',
       notNull: true,
-      default: pgm.func('current_timestamp'),
+      default: pgm.func('current_datetime'),
     },
   });
 };
