@@ -1,6 +1,6 @@
-# Mood Journal Server
+## Mood Journal Server
 
-## Open Endpoints
+### Open Endpoints
 Open endpoints require no Authentication.
 
 -[Show Entries](documentation/GET.md) : `GET /api/moodjournal/entries`
