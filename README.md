@@ -1,7 +1,7 @@
 ## Mood Journal
 ### Backend
 
-[Live App](moodjournalcapstone.now.sh)
+[Live App](https://moodjournalcapstone.now.sh/)
 
 ### Open Endpoints
 Open endpoints require no Authentication.
