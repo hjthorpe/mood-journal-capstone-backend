@@ -1,7 +1,7 @@
 ## Mood Journal
 ### Backend
 
-[Live App](https://vercel.com/hjthorpe/moodjournalcapstone/411ji7036)
+[Live App](moodjournalcapstone.now.sh)
 
 ### Open Endpoints
 Open endpoints require no Authentication.
